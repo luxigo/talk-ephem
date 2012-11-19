@@ -19,8 +19,8 @@ case "$2" in
 	set)	WHAT="se couche" ;;
 	new)	WHAT="est noire" ;;
 	first)	WHAT="est croissante" ;;
-	first)	WHAT="est pleine" ;;
-	first)	WHAT="est décroissante" ;;
+	full)	WHAT="est pleine" ;;
+	last)	WHAT="est décroissante" ;;
 esac
 
 espeak -v mb-fr1 "$WHO $WHAT" #--stdout | pacat --rate=8000

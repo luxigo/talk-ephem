@@ -5,7 +5,7 @@ import datetime
 import sys
 
 fmt='%M %H %d %m *'
-script='/usr/bin/talk-ephem-say'
+script='/usr/bin/talk-ephem-say-'+os.environ['LANGUAGE'];
 
 city=os.environ.get('CITY')
 
@@ -57,10 +57,8 @@ if (moon_last_quarter<next_phase):
 
 print ephem.localtime(obs.next_rising(sun)).strftime(fmt),script,"sun rise"
 print ephem.localtime(obs.next_setting(sun)).strftime(fmt),script,"sun set"
-print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon rise"
-print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon "+cur_phase
-print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon set"
-print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon "+cur_phase
+print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon rise "+cur_phase
+print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon set "+cur_phase
 print ephem.localtime(obs.next_rising(mercury)).strftime(fmt),script,"mercury rise"
 print ephem.localtime(obs.next_setting(mercury)).strftime(fmt),script,"mercury set"
 print ephem.localtime(obs.next_rising(venus)).strftime(fmt),script,"venus rise"

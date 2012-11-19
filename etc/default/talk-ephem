@@ -1,3 +1,19 @@
 ENABLE=1
+
+# replace it with name of user able to play sound if needed
 _USER=$(grep 1000 /etc/passwd | cut -f 1 -d :)
+
+# set your language here, fork the github repository and when your /usr/bin/talk-ephem-say.<language> and /usr/bin/speakingclock.<language> are ready send a push request :-)
+LANGUAGE="fr"
+
+# espeak settings - if you change language maybe you want to change VOICE
+VOICE=mb-${LANGUAGE}1
+SPEED=130
+PITCH=30
+
+# Specify a city name or your coordinates instead
 CITY=Geneva
+#LATITUDE=
+#LONGITUDE=
+#ELEVATION=
+

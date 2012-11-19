@@ -1,0 +1,91 @@
+#!/bin/sh
+
+. /etc/default/talk-ephem
+
+[ -z "$VOICE" ] && VOICE=mb-fr1
+[ -z "$SPEED" ] && SPEED=130
+[ -z "$PITCH" ] && PITCH=30
+
+HOUR=$(date '+%H' | sed -r -e s/^0//)
+[ -n "$1" ] && HOUR=$1
+
+MINUTES=$(date '+%M' | sed -r -e s/^0//)
+[ -n "$2" ] && MINUTES=$2
+
+
+HOUR_toText() {
+	case $HOUR in
+		0) HOUR=minuit ;;
+		1) HOUR="une heure" ;;
+		2) HOUR="2 heure" ;;
+		3) HOUR="3 heure" ;;
+		4) HOUR="4 heure" ;;
+		5) HOUR="5 heure" ;;
+		6) HOUR="6 heure" ;;
+		7) HOUR="7 heure" ;;
+		8) HOUR="8 heure" ;;
+		9) HOUR="9 heure" ;;
+		10) HOUR="10 heure" ;;
+		11) HOUR="11 heure" ;;
+		12) HOUR=midi ;;
+		13) HOUR="1 heure" ;;
+		14) HOUR="2 heure" ;;
+		15) HOUR="3 heure" ;;
+		16) HOUR="4 heure" ;;
+		17) HOUR="5 heure" ;;
+		18) HOUR="6 heure" ;;
+		19) HOUR="7 heure" ;;
+		20) HOUR="8 heure" ;;
+		21) HOUR="9 heure" ;;
+		22) HOUR="10 heure" ;;
+		23) HOUR="11 heure" ;;
+	esac
+}
+
+if [ $MINUTES = 0 ] ; then
+
+	HOUR_toText
+	TEXT="il est exactement $HOUR $QUAL"
+else
+	if [ $MINUTES -gt 50 ] ; then
+		HOUR=$(expr $HOUR + 1)
+		[ $HOUR -eq 24 ] && $HOUR=0
+		MINUTES=$(expr 60 - $MINUTES);
+		[ $MINUTES -eq 1 ] && MINUTES=une
+		MINUTES="moins $MINUTES"
+	else
+		case $MINUTES in
+			1) MINUTES=une ;;
+			15)
+				MINUTES="et quart"
+			;;
+			30)	MINUTES="et demi"
+			 ;;
+			35)
+				MINUTES="moins 25"
+				HOUR=$(expr $HOUR + 1)
+				[ $HOUR -eq 24 ] && $HOUR=0
+			;;
+			40)
+				MINUTES="moins 20"
+				HOUR=$(expr $HOUR + 1)
+				[ $HOUR -eq 24 ] && $HOUR=0
+			;;
+			45) 
+				HOUR=$(expr $HOUR + 1)
+				[ $HOUR -eq 24 ] && $HOUR=0
+				MINUTES="moins quart"
+			;;
+			50) 
+				HOUR=$(expr $HOUR + 1)
+				[ $HOUR -eq 24 ] && $HOUR=0
+				MINUTES="moins 10"
+			;;
+		esac
+	fi
+
+	HOUR_toText
+	TEXT="il est exactement $HOUR $MINUTES"
+fi
+
+espeak -v $VOICE -s $SPEED -p $PITCH "$TEXT"

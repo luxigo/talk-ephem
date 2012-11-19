@@ -1,0 +1,63 @@
+#!/bin/sh
+
+. /etc/default/talk-ephem
+
+[ -z "$VOICE" ] && VOICE=mb-fr1
+[ -z "$SPEED" ] && SPEED=130
+[ -z "$PITCH" ] && PITCH=30
+
+moon_phase() {
+	case "$1" in
+	new)	echo "est noire" ;;
+	first)	echo "est croissante" ;;
+	full)	echo "est pleine" ;;
+	last)	echo "est décroissante" ;;
+	esac
+}
+
+case $1 in 
+	sun) WHO="le soleil" ;;
+	moon) WHO="la lune" ;;
+	mercury) WHO="mercure" ;;
+	venus) WHO="vénusse" ;;
+	pluto) WHO="pluton" ;;
+	saturn) WHO="saturne" ;;
+	jupiter) WHO="jupiterre" ;;
+	*) WHO=$1 ;;
+esac
+
+case "$2" in 
+	rise) 
+		case $1 in
+			sun)
+				WHO="le jour" 
+				WHAT="se lève" ;;
+			moon)
+				WHAT="se lève. La lune $(moon_phase $3)" ;;
+			*)
+				WHAT="apparait au dessus de l'horizon" ;;
+		esac
+	;;
+
+	set)	
+		case $1 in
+			sun)
+				WHAT="se couche" ;;
+			moon)
+				WHAT="se couche. La lune $(moon_phase $3)" ;;
+			*)
+				WHAT="disparait à l'horizon" ;;
+		esac
+	;;
+
+	*)
+		WHAT=$(moon_phase $2)
+	;;
+
+esac
+
+/usr/bin/speakingclock-$LANGUAGE
+
+espeak -v $VOICE "$WHO $WHAT" -s $SPEED -p $PITCH
+		
+

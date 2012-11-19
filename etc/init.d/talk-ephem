@@ -5,7 +5,8 @@ set -e
 . /etc/default/talk-ephem 
 [ "$ENABLE" != "yes" -a "$ENABLE" != "1" ] && exit 0
 
-export CITY LONGITUDE LATITUDE ELEVATION
+# exports for talk-ephem-crontab
+export LANGUAGE CITY LONGITUDE LATITUDE ELEVATION
 
 case "$1" in 
     start) 

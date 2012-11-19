@@ -1,0 +1,80 @@
+#!/usr/bin/python
+import os
+import ephem
+import datetime
+import sys
+
+fmt='%M %H %d %m *'
+script='/usr/bin/talk-ephem-say'
+
+city=os.environ.get('CITY')
+
+if (city!=None):
+  obs=ephem.city(os.environ['CITY'])
+else:
+  obs=ephem.Observer()
+  obs.lat=os.environ['LATITUDE']
+  obs.long=os.environ['LONGITUDE']
+  obs.elevation=os.environ['ELEVATION']
+
+obs.date = datetime.datetime.now()
+
+sun = ephem.Sun()
+moon = ephem.Moon()
+mercury = ephem.Mercury()
+venus = ephem.Venus()
+mars = ephem.Mars()
+jupiter = ephem.Jupiter()
+saturn = ephem.Saturn()
+uranus = ephem.Uranus()
+neptune = ephem.Neptune()
+pluto = ephem.Pluto()
+
+# compute current moon phase
+moon_new=ephem.localtime(ephem.next_new_moon(obs.date))
+print moon_new.strftime(fmt),script,"moon new"
+
+moon_first_quarter=ephem.localtime(ephem.next_first_quarter_moon(obs.date))
+print moon_first_quarter.strftime(fmt),script,"moon first"
+
+moon_full=ephem.localtime(ephem.next_full_moon(obs.date))
+print moon_full.strftime(fmt),script,"moon full"
+
+moon_last_quarter=ephem.localtime(ephem.next_last_quarter_moon(obs.date))
+print moon_last_quarter.strftime(fmt),script,"moon last"
+
+cur_phase='last'
+next_phase=moon_new
+if (moon_first_quarter<moon_new):
+  cur_phase='new'
+  next_phase=moon_first_quarter
+if (moon_full<next_phase):
+  cur_phase='first'
+  next_phase=moon_full
+if (moon_last_quarter<next_phase):
+  cur_phase='full'
+  next_phase=moon_last_quarter
+
+print ephem.localtime(obs.next_rising(sun)).strftime(fmt),script,"sun rise"
+print ephem.localtime(obs.next_setting(sun)).strftime(fmt),script,"sun set"
+print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon rise"
+print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon "+cur_phase
+print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon set"
+print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon "+cur_phase
+print ephem.localtime(obs.next_rising(mercury)).strftime(fmt),script,"mercury rise"
+print ephem.localtime(obs.next_setting(mercury)).strftime(fmt),script,"mercury set"
+print ephem.localtime(obs.next_rising(venus)).strftime(fmt),script,"venus rise"
+print ephem.localtime(obs.next_setting(venus)).strftime(fmt),script,"venus set"
+print ephem.localtime(obs.next_rising(mars)).strftime(fmt),script,"mars rise"
+print ephem.localtime(obs.next_setting(mars)).strftime(fmt),script,"mars set"
+print ephem.localtime(obs.next_rising(jupiter)).strftime(fmt),script,"jupiter rise"
+print ephem.localtime(obs.next_setting(jupiter)).strftime(fmt),script,"jupiter set"
+print ephem.localtime(obs.next_rising(saturn)).strftime(fmt),script,"saturn rise"
+print ephem.localtime(obs.next_setting(saturn)).strftime(fmt),script,"saturn set"
+print ephem.localtime(obs.next_rising(uranus)).strftime(fmt),script,"uranus rise"
+print ephem.localtime(obs.next_setting(uranus)).strftime(fmt),script,"uranus set"
+print ephem.localtime(obs.next_rising(neptune)).strftime(fmt),script,"neptune rise"
+print ephem.localtime(obs.next_setting(neptune)).strftime(fmt),script,"neptune set"
+print ephem.localtime(obs.next_rising(pluto)).strftime(fmt),script,"pluto rise"
+print ephem.localtime(obs.next_setting(pluto)).strftime(fmt),script,"pluto set"
+

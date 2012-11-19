@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e 
+
+. /etc/default/talk-ephem 
+[ "$ENABLE" != "yes" -a "$ENABLE" != "1" ] && exit 0
+
+export CITY LONGITUDE LATITUDE ELEVATION
+
+case "$1" in 
+    start) 
+      crontab -u $_USER -l 2>/dev/null | sed -r -e /talk.ephem.say/d > /tmp/$$.tmp || exit
+      sudo -E -u $_USER /usr/bin/talk-ephem-crontab >> /tmp/$$.tmp || exit
+      crontab -u $_USER /tmp/$$.tmp
+    ;;
+    stop) 
+      crontab -u $_USER -l 2>/dev/null | sed -r -e /talk.ephem.say/d > /tmp/$$.tmp || exit
+      crontab -u $_USER /tmp/$$.tmp
+    ;;
+esac
+
+rm -f /tmp/$$.tmp 2>/dev/null

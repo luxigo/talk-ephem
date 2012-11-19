@@ -1,0 +1,28 @@
+#!/bin/sh
+case $1 in 
+	sun) WHO="le soleil" ;;
+	moon) WHO="la lune" ;;
+	mercury) WHO="mercure" ;;
+	venus) WHO="vénusse" ;;
+	pluto) WHO="pluton" ;;
+	saturn) WHO="saturne" ;;
+	jupiter) WHO="jupiterre" ;;
+	*) WHO=$1 ;;
+esac
+
+case "$2" in 
+	rise) 
+		WHAT="se lève"
+		[ "$1" = "sun" ] && WHO="le jour"
+	;;
+
+	set)	WHAT="se couche" ;;
+	new)	WHAT="est noire" ;;
+	first)	WHAT="est croissante" ;;
+	first)	WHAT="est pleine" ;;
+	first)	WHAT="est décroissante" ;;
+esac
+
+espeak -v mb-fr1 "$WHO $WHAT" #--stdout | pacat --rate=8000
+		
+

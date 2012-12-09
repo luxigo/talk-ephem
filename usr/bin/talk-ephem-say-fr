@@ -41,12 +41,10 @@ case "$2" in
 
 	set)	
 		case $1 in
-			sun)
-				WHAT="se couche" ;;
 			moon)
 				WHAT="se couche. La lune $(moon_phase $3)" ;;
 			*)
-				WHAT="disparait à l'horizon" ;;
+				WHAT="se couche" ;;
 		esac
 	;;
 

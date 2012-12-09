@@ -45,7 +45,7 @@ HOUR_toText() {
 if [ $MINUTES = 0 ] ; then
 
 	HOUR_toText
-	TEXT="il est exactement $HOUR $QUAL"
+	TEXT="il est $HOUR $QUAL"
 else
 	if [ $MINUTES -gt 50 ] ; then
 		HOUR=$(expr $HOUR + 1)
@@ -85,7 +85,7 @@ else
 	fi
 
 	HOUR_toText
-	TEXT="il est exactement $HOUR $MINUTES"
+	TEXT="il est $HOUR $MINUTES"
 fi
 
 espeak -v $VOICE -s $SPEED -p $PITCH "$TEXT"

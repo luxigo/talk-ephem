@@ -19,6 +19,8 @@ else:
 
 obs.date = datetime.datetime.now()
 
+print "0 0 * * * /etc/init.d/talk-ephem start"
+
 sun = ephem.Sun()
 moon = ephem.Moon()
 mercury = ephem.Mercury()
@@ -75,4 +77,5 @@ print ephem.localtime(obs.next_rising(neptune)).strftime(fmt),script,"neptune ri
 print ephem.localtime(obs.next_setting(neptune)).strftime(fmt),script,"neptune set"
 print ephem.localtime(obs.next_rising(pluto)).strftime(fmt),script,"pluto rise"
 print ephem.localtime(obs.next_setting(pluto)).strftime(fmt),script,"pluto set"
+
 

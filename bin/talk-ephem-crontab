@@ -57,8 +57,6 @@ if (moon_last_quarter<next_phase):
   cur_phase='full'
   next_phase=moon_last_quarter
 
-print ephem.localtime(obs.next_rising(sun)).strftime(fmt),script,"sun rise"
-print ephem.localtime(obs.next_setting(sun)).strftime(fmt),script,"sun set"
 print ephem.localtime(obs.next_rising(moon)).strftime(fmt),script,"moon rise "+cur_phase
 print ephem.localtime(obs.next_setting(moon)).strftime(fmt),script,"moon set "+cur_phase
 print ephem.localtime(obs.next_rising(mercury)).strftime(fmt),script,"mercury rise"
@@ -77,5 +75,21 @@ print ephem.localtime(obs.next_rising(neptune)).strftime(fmt),script,"neptune ri
 print ephem.localtime(obs.next_setting(neptune)).strftime(fmt),script,"neptune set"
 print ephem.localtime(obs.next_rising(pluto)).strftime(fmt),script,"pluto rise"
 print ephem.localtime(obs.next_setting(pluto)).strftime(fmt),script,"pluto set"
+
+sun_rise=ephem.localtime(obs.next_rising(sun)).strftime(fmt)
+sun_set=ephem.localtime(obs.next_setting(sun)).strftime(fmt)
+sun_set_localtime=ephem.localtime(obs.next_setting(sun))
+
+obs.horizon=os.environ['DAWN_AND_DUSK']
+
+sun_dawn=ephem.localtime(obs.next_rising(sun)).strftime(fmt)
+sun_dusk=ephem.localtime(obs.next_setting(sun)).strftime(fmt)
+sun_dusk_delta=ephem.localtime(obs.next_setting(sun))-sun_set_localtime
+
+
+print sun_dawn,script,"day rise"
+print sun_rise,script,"sun rise"
+print sun_set,script,"sun set "+str(int(sun_dusk_delta.seconds/60))
+print sun_dusk,script,"day set"
 
 

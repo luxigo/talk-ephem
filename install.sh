@@ -1,5 +1,4 @@
 #!/bin/sh
-tar c . --owner root --group root --exclude .git --exclude README.md --exclude install.sh --exclude install_dependencies.sh | tar xv -C /
 
 crontab -u root -l 2>/dev/null | sed -r -e /talk.ephem/d > /tmp/$$.tmp || exit
 echo "0 0 * * *  /etc/init.d/talk-ephem start" >> /tmp/$$.tmp

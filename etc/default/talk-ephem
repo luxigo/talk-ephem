@@ -1,5 +1,7 @@
 ENABLE=1
 
+DAWN_AND_DUSK="-12" ## (nautical) other values are -6 (civil) and -18 (astronomical)
+
 # replace it with name of user able to play sound if needed
 _USER=$(grep 1000 /etc/passwd | cut -f 1 -d :)
 

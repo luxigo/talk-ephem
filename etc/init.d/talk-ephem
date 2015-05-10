@@ -6,7 +6,7 @@ set -e
 [ "$ENABLE" != "yes" -a "$ENABLE" != "1" ] && exit 0
 
 # exports for talk-ephem-crontab
-export LANGUAGE CITY LONGITUDE LATITUDE ELEVATION
+export LANGUAGE CITY LONGITUDE LATITUDE ELEVATION DAWN_AND_DUSK
 
 case "$1" in 
     start) 

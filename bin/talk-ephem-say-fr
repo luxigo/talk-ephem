@@ -29,8 +29,11 @@ esac
 case "$2" in 
 	rise) 
 		case $1 in
+      day)
+        WHO="le jour"
+        WHAT="se lève" ;;
 			sun)
-				WHO="le jour" 
+				WHO="le soleil" 
 				WHAT="se lève" ;;
 			moon)
 				WHAT="se lève. La lune $(moon_phase $3)" ;;
@@ -41,6 +44,13 @@ case "$2" in
 
 	set)	
 		case $1 in
+      day)
+        WHO="la nuit"
+        WHAT="est tombée" ;;
+      sun)
+        WHO="le soleil"
+        WHAT="se couche"
+        MORE="... Il fera nuit d'ici $3 minutes" ;;
 			moon)
 				WHAT="se couche. La lune $(moon_phase $3)" ;;
 			*)
@@ -58,4 +68,5 @@ esac
 
 espeak -v $VOICE "$WHO $WHAT" -s $SPEED -p $PITCH
 		
+[ -n "$MORE" ] && sleep 1 && espeak -v $VOICE "$MORE" -s $SPEED -p $PITCH
 
